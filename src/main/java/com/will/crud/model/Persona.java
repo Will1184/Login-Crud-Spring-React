@@ -1,8 +1,5 @@
 package com.will.crud.model;
-
 import jakarta.persistence.*;
-
-
 
 @Entity
 @Table(name="personas2")

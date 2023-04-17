@@ -1,7 +1,7 @@
 package com.will.crud.service;
 
 
-import com.will.crud.controller.auth.*;
+import com.will.crud.auth.*;
 import com.will.crud.model.Rol;
 import com.will.crud.model.Usuario;
 import com.will.crud.repository.TokenRepository;
@@ -13,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -110,7 +109,6 @@ public class AuthenticationService {
     if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
       throw new BadCredentialsException("Password does not match.");
     }
-
     user.setEmail(request.getNewemail());
     repository.save(user);
 
@@ -119,5 +117,13 @@ public class AuthenticationService {
 
     return new ChangeEmailResponse("Email updated successfully.");
   }
+  public LogoutResponse logoutResponse (LogoutRequest request) {
+    var user = repository.findByUsername(request.getUsername())
+            .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + request.getUsername()));
 
+    // Revoke all user tokens to force re-authentication with the new email
+    revokeAllUserTokens(user);
+
+    return new LogoutResponse("Logout successfully.");
+  }
 }

@@ -1,4 +1,4 @@
-package com.will.crud.controller.auth;
+package com.will.crud.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

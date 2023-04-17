@@ -1,5 +1,6 @@
-package com.will.crud.controller.auth;
+package com.will.crud.controller;
 
+import com.will.crud.auth.*;
 import com.will.crud.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -34,9 +35,15 @@ public class AuthenticationController {
   }
 
   @PostMapping("/changeEmail")
-  public ResponseEntity<ChangeEmailResponse> changePassword(
+  public ResponseEntity<ChangeEmailResponse> changeEmail(
           @RequestBody ChangeEmailRequest request
   ) {
     return ResponseEntity.ok(service.changeEmail(request));
+  }
+  @PostMapping("/userlogout")
+  public ResponseEntity<LogoutResponse> logoutResponse(
+          @RequestBody LogoutRequest request
+  ) {
+    return ResponseEntity.ok(service.logoutResponse(request));
   }
 }
