@@ -1,11 +1,12 @@
 package com.will.crud.controller;
 
-import com.will.crud.exception.ResourceNotFoundException;
 import com.will.crud.model.Persona;
-import com.will.crud.repository.PersonaRepository;
+import com.will.crud.service.PersonaService;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -13,61 +14,44 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/personas")
 public class PersonaController {
+    private final PersonaService personaService;
+
     @Autowired
-    private PersonaRepository personaRepository;
+    public PersonaController(PersonaService personaService) {
+        this.personaService = personaService;
+    }
 
-    //get all personas
     @GetMapping
-    public List<Persona> getAllPersonas(){
-        return personaRepository.findAll();
+
+    public List<Persona> getAllPersonas() {
+        return personaService.getAllPersonas();
     }
 
-
-    //create persona
-    @PostMapping
-    public Persona createPersona( @RequestBody Persona persona){
-        return  personaRepository.save(persona);
-    }
-
-
-    //Build get persona by id
     @GetMapping("{id}")
-    public ResponseEntity<Persona> getPersonaById(@PathVariable long id){
-        Persona persona = personaRepository.findById(id)
-                .orElseThrow(()-> new ResourceNotFoundException("Persona not exist with id: "+ id));
-        return  ResponseEntity.ok(persona);
+
+    public ResponseEntity<Persona> getPersonaById(@PathVariable long id) {
+        Persona persona = personaService.getPersonaById(id);
+        return ResponseEntity.ok(persona);
     }
 
 
-    //build update persona
+    @PostMapping
+
+    public Persona createPersona(@RequestBody Persona persona) {
+        return personaService.createPersona(persona);
+    }
+
     @PutMapping("{id}")
-    public  ResponseEntity<Persona> updatePerona(@PathVariable long id,@RequestBody Persona personaDetails){
-        Persona updatePersona = personaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Persona not exist with id: "+id));
-        updatePersona.setPrimer_nombre(personaDetails.getPrimer_nombre());
-        updatePersona.setSegundo_nombre(personaDetails.getSegundo_nombre());
-        updatePersona.setPrimer_apellido(personaDetails.getPrimer_apellido());
-        updatePersona.setSegundo_apellido(personaDetails.getSegundo_apellido());
-        updatePersona.setEdad(personaDetails.getEdad());
-        updatePersona.setCorreo_electronico(personaDetails.getCorreo_electronico());
-        updatePersona.setTelefono(personaDetails.getTelefono());
-        updatePersona.setPosicion(personaDetails.getPosicion());
 
-        personaRepository.save(updatePersona);
-
-        return  ResponseEntity.ok(updatePersona);
+    public ResponseEntity<Persona> updatePerona(@PathVariable long id, @RequestBody Persona personaDetails) {
+        Persona updatedPersona = personaService.updatePersona(id, personaDetails);
+        return ResponseEntity.ok(updatedPersona);
     }
 
-
-    //build delete persona
     @DeleteMapping("{id}")
-    public  ResponseEntity<HttpStatus> deletePersona(@PathVariable long id){
-        Persona persona = personaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Persona not exit with id: "+id));
-
-        personaRepository.delete(persona);
-
-        return  new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    @PreAuthorize("hasAuthority('admin:delete')")
+    public ResponseEntity<HttpStatus> deletePersona(@PathVariable long id) {
+        personaService.deletePersona(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
-
 }

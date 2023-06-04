@@ -2,13 +2,12 @@ package com.will.crud.service;
 
 
 import com.will.crud.auth.*;
-import com.will.crud.model.Rol;
 import com.will.crud.model.Usuario;
 import com.will.crud.repository.TokenRepository;
 import com.will.crud.repository.UsuarioRepository;
 import com.will.crud.security.JwtUtils;
-import com.will.crud.token.Token;
-import com.will.crud.token.TokenType;
+import com.will.crud.model.Token;
+import com.will.crud.repository.TokenType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -33,15 +32,20 @@ public class AuthenticationService {
         .email(request.getEmail())
             .username(request.getUsername())
         .password(passwordEncoder.encode(request.getPassword()))
-        .role(Rol.USER)
+        .role(request.getRole())
         .build();
     var savedUser = repository.save(user);
     var jwtToken = jwtService.generateToken(user);
+    var refreshToken = jwtService.generateRefreshToken(user);
     saveUserToken(savedUser, jwtToken);
     return AuthenticationResponse.builder()
         .token(jwtToken)
+            .email(user.getEmail())
+            .username(user.getUsername())
+            .role(user.getRole())
         .build();
   }
+
 
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -60,7 +64,7 @@ public class AuthenticationService {
         .token(jwtToken)
             .username(user.getUsername())
             .email(user.getEmail())
-            .role(user.getRole().name())
+            .role(user.getRole())
             .build();
   }
 
@@ -117,13 +121,5 @@ public class AuthenticationService {
 
     return new ChangeEmailResponse("Email updated successfully.");
   }
-  public LogoutResponse logoutResponse (LogoutRequest request) {
-    var user = repository.findByUsername(request.getUsername())
-            .orElseThrow(() -> new UsernameNotFoundException("User not found with username: " + request.getUsername()));
 
-    // Revoke all user tokens to force re-authentication with the new email
-    revokeAllUserTokens(user);
-
-    return new LogoutResponse("Logout successfully.");
-  }
 }

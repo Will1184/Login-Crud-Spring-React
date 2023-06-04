@@ -40,10 +40,4 @@ public class AuthenticationController {
   ) {
     return ResponseEntity.ok(service.changeEmail(request));
   }
-  @PostMapping("/userlogout")
-  public ResponseEntity<LogoutResponse> logoutResponse(
-          @RequestBody LogoutRequest request
-  ) {
-    return ResponseEntity.ok(service.logoutResponse(request));
-  }
 }

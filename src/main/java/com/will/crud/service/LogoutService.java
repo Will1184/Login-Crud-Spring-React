@@ -1,4 +1,4 @@
-package com.will.crud.security;
+package com.will.crud.service;
 
 
 import com.will.crud.repository.TokenRepository;
@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 public class LogoutService implements LogoutHandler {
 
   private final TokenRepository tokenRepository;
-
   @Override
   public void logout(
       HttpServletRequest request,

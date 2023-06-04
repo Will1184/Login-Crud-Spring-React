@@ -1,105 +1,32 @@
 package com.will.crud.model;
-import jakarta.persistence.*;
 
+import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Data
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
-@Table(name="personas2")
+@Table(name="futbolistas")
 public class Persona {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private String primer_nombre;
-    private String segundo_nombre;
-    private String primer_apellido;
-    private String segundo_apellido;
-    private String edad;
-    private String correo_electronico;
-    private String telefono;
-    private String posicion;
+    private Long id; // Identificador único de la persona
 
-    public Persona() {
-    }
+    private String nombres; // Nombres de la persona
+    private String apellidos; // Apellidos de la persona
+    private String fecha_nacimiento; // Fecha de nacimiento de la persona
+    private String email; // Correo electrónico de la persona
+    private String telefono; // Número de teléfono de la persona
+    private String posicion; // Posición en la que juega el futbolista
 
-    public Persona(Long id,String primer_nombre, String segundo_nombre, String primer_apellido, String segundo_apellido, String edad, String correo_electronico, String telefono, String posicion) {
-        this.id = id;
-        this.primer_nombre = primer_nombre;
-        this.segundo_nombre = segundo_nombre;
-        this.primer_apellido = primer_apellido;
-        this.segundo_apellido = segundo_apellido;
-        this.edad = edad;
-        this.correo_electronico = correo_electronico;
-        this.telefono = telefono;
-        this.posicion = posicion;
-    }
+    // Getters y setters generados automáticamente por Lombok
 
-    public Long getId() {
-        return id;
-    }
+    // Constructor sin argumentos generado automáticamente por Lombok
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getPrimer_nombre() {
-        return primer_nombre;
-    }
-
-    public void setPrimer_nombre(String primer_nombre) {
-        this.primer_nombre = primer_nombre;
-    }
-
-    public String getSegundo_nombre() {
-        return segundo_nombre;
-    }
-
-    public void setSegundo_nombre(String segundo_nombre) {
-        this.segundo_nombre = segundo_nombre;
-    }
-
-    public String getPrimer_apellido() {
-        return primer_apellido;
-    }
-
-    public void setPrimer_apellido(String primer_apellido) {
-        this.primer_apellido = primer_apellido;
-    }
-
-    public String getSegundo_apellido() {
-        return segundo_apellido;
-    }
-
-    public void setSegundo_apellido(String segundo_apellido) {
-        this.segundo_apellido = segundo_apellido;
-    }
-
-    public String getEdad() {
-        return edad;
-    }
-
-    public void setEdad(String edad) {
-        this.edad = edad;
-    }
-
-    public String getCorreo_electronico() {
-        return correo_electronico;
-    }
-
-    public void setCorreo_electronico(String correo_electronico) {
-        this.correo_electronico = correo_electronico;
-    }
-
-    public String getTelefono() {
-        return telefono;
-    }
-
-    public void setTelefono(String telefono) {
-        this.telefono = telefono;
-    }
-
-    public String getPosicion() {
-        return posicion;
-    }
-
-    public void setPosicion(String posicion) {
-        this.posicion = posicion;
-    }
+    // Constructor con todos los argumentos generado automáticamente por Lombok
 }

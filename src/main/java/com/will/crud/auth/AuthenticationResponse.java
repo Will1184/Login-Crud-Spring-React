@@ -1,5 +1,6 @@
 package com.will.crud.auth;
 
+import com.will.crud.repository.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -14,5 +15,5 @@ public class AuthenticationResponse {
   private String token;
   private String username;
   private String email;
-  private String role;
+  private Rol role;
 }
