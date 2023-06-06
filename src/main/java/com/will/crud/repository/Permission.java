@@ -3,17 +3,19 @@ package com.will.crud.repository;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+/**
+ * Enumeración que define los permisos disponibles en el sistema.
+ */
 @RequiredArgsConstructor
 public enum Permission {
-    ADMIN_READ("admin:read"),
-    ADMIN_UPDATE("admin:update"),
-    ADMIN_CREATE("admin:create"),
-    ADMIN_DELETE("admin:delete"),
-    MANAGER_READ("management:read"),
-    MANAGER_UPDATE("management:update"),
-    MANAGER_CREATE("management:create"),
-    MANAGER_DELETE("management:delete")
-
+    ADMIN_READ("admin:read"),            // Permiso de lectura para el administrador
+    ADMIN_UPDATE("admin:update"),        // Permiso de actualización para el administrador
+    ADMIN_CREATE("admin:create"),        // Permiso de creación para el administrador
+    ADMIN_DELETE("admin:delete"),        // Permiso de eliminación para el administrador
+    MANAGER_READ("management:read"),     // Permiso de lectura para el gerente
+    MANAGER_UPDATE("management:update"), // Permiso de actualización para el gerente
+    MANAGER_CREATE("management:create"), // Permiso de creación para el gerente
+    MANAGER_DELETE("management:delete")  // Permiso de eliminación para el gerente
     ;
 
     @Getter

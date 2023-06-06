@@ -1,6 +1,5 @@
 package com.will.crud.repository;
 
-import com.will.crud.repository.Permission;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -15,6 +14,10 @@ import static com.will.crud.repository.Permission.*;
 @RequiredArgsConstructor
 public enum Rol {
     USER(Collections.emptySet()),
+
+    /**
+     * Rol de administrador con permisos completos.
+     */
     ADMIN(
             Set.of(
                     ADMIN_READ,
@@ -27,6 +30,10 @@ public enum Rol {
                     MANAGER_CREATE
             )
     ),
+
+    /**
+     * Rol de gerente con permisos limitados.
+     */
     MANAGER(
             Set.of(
                     MANAGER_READ,
@@ -34,17 +41,23 @@ public enum Rol {
                     MANAGER_DELETE,
                     MANAGER_CREATE
             )
-    )
-    ;
+    );
+
     @Getter
     private final Set<Permission> permissions;
 
-    public List<SimpleGrantedAuthority> getAuthorityList(){
+    /**
+     * Obtiene una lista de autoridades (granted authorities) asociadas al rol.
+     * Incluye los permisos individuales y el rol como autoridades.
+     *
+     * @return Lista de autoridades asociadas al rol
+     */
+    public List<SimpleGrantedAuthority> getAuthorityList() {
         var authority = getPermissions()
                 .stream()
                 .map(permission -> new SimpleGrantedAuthority(permission.getPermission()))
                 .collect(Collectors.toList());
-        authority.add(new SimpleGrantedAuthority("Role_"+this.name()));
+        authority.add(new SimpleGrantedAuthority("Role_" + this.name()));
 
         return authority;
     }

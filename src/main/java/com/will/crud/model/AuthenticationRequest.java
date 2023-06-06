@@ -1,10 +1,14 @@
-package com.will.crud.auth;
+package com.will.crud.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Clase que representa una solicitud de autenticación.
+ * Contiene los campos de nombre de usuario y contraseña.
+ */
 @Data
 @Builder
 @AllArgsConstructor
