@@ -1,6 +1,6 @@
 package com.will.crud.repository;
 
-import com.will.crud.model.Usuario;
+import com.will.crud.model.entity.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

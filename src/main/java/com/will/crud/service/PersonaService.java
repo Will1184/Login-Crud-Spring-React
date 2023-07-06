@@ -1,7 +1,7 @@
 package com.will.crud.service;
 
 import com.will.crud.exception.ResourceNotFoundException;
-import com.will.crud.model.Persona;
+import com.will.crud.model.entity.Persona;
 import com.will.crud.repository.PersonaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

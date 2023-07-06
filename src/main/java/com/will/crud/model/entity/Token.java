@@ -1,4 +1,4 @@
-package com.will.crud.model;
+package com.will.crud.model.entity;
 
 import com.will.crud.repository.TokenType;
 import jakarta.persistence.*;
@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="token")
+@Table(name="tokens")
 public class Token {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

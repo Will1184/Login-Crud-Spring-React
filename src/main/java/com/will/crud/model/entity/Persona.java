@@ -1,4 +1,4 @@
-package com.will.crud.model;
+package com.will.crud.model.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

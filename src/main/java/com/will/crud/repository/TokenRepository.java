@@ -1,6 +1,6 @@
 package com.will.crud.repository;
 
-import com.will.crud.model.Token;
+import com.will.crud.model.entity.Token;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 

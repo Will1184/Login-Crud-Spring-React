@@ -1,6 +1,6 @@
 package com.will.crud.service;
 
-import com.will.crud.model.Usuario;
+import com.will.crud.model.entity.Usuario;
 import com.will.crud.model.AuthenticationRequest;
 import com.will.crud.model.AuthenticationResponse;
 import com.will.crud.model.RegisterRequest;
@@ -8,7 +8,7 @@ import com.will.crud.repository.Rol;
 import com.will.crud.repository.TokenRepository;
 import com.will.crud.repository.UsuarioRepository;
 import com.will.crud.security.JwtUtils;
-import com.will.crud.model.Token;
+import com.will.crud.model.entity.Token;
 import com.will.crud.repository.TokenType;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

@@ -1,6 +1,6 @@
 package com.will.crud.controller;
 
-import com.will.crud.model.Persona;
+import com.will.crud.model.entity.Persona;
 import com.will.crud.service.PersonaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
