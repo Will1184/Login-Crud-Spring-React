@@ -2,9 +2,9 @@ package com.will.crud.controller;
 
 
 import com.will.crud.exception.ResourceNotFoundException;
-import com.will.crud.model.AuthenticationRequest;
-import com.will.crud.model.AuthenticationResponse;
-import com.will.crud.model.RegisterRequest;
+import com.will.crud.model.request.AuthenticationRequest;
+import com.will.crud.model.response.AuthenticationResponse;
+import com.will.crud.model.request.RegisterRequest;
 import com.will.crud.repository.UsuarioRepository;
 import com.will.crud.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;

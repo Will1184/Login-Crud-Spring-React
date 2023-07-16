@@ -1,7 +1,6 @@
 package com.will.crud.model.entity;
 
-import com.will.crud.model.entity.Token;
-import com.will.crud.repository.Rol;
+import com.will.crud.model.enums.Rol;
 import jakarta.persistence.*;
 import java.util.Collection;
 import java.util.List;

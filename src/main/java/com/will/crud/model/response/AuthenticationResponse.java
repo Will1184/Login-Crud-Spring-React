@@ -1,6 +1,6 @@
-package com.will.crud.model;
+package com.will.crud.model.response;
 
-import com.will.crud.repository.Rol;
+import com.will.crud.model.enums.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

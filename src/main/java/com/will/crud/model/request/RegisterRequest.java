@@ -1,4 +1,4 @@
-package com.will.crud.model;
+package com.will.crud.model.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

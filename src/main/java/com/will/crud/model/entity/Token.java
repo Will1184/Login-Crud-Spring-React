@@ -1,6 +1,6 @@
 package com.will.crud.model.entity;
 
-import com.will.crud.repository.TokenType;
+import com.will.crud.model.enums.TokenType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

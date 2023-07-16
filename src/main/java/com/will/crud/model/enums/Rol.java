@@ -1,4 +1,4 @@
-package com.will.crud.repository;
+package com.will.crud.model.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.will.crud.repository.Permission.*;
+import static com.will.crud.model.enums.Permission.*;
 
 @RequiredArgsConstructor
 public enum Rol {

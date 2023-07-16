@@ -1,4 +1,4 @@
-package com.will.crud.repository;
+package com.will.crud.model.enums;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
