@@ -33,9 +33,6 @@ public class AuthenticationController {
   public ResponseEntity<AuthenticationResponse> register(
           @RequestBody RegisterRequest request
   ){
-    if(repository.findByUsername(request.getUsername().trim()).isPresent()){
-       throw new ResourceNotFoundException("Dont register two account with the same username");
-    }
       return ResponseEntity.ok(service.register(request));
   }
 
