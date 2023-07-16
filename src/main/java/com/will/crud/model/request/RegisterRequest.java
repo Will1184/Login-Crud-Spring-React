@@ -1,5 +1,6 @@
 package com.will.crud.model.request;
 
+import com.will.crud.model.enums.Rol;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -19,4 +20,5 @@ public class RegisterRequest {
   private String username;   // Nombre de usuario
   private String email;      // Email del usuario
   private String password;   // Contraseña del usuario
+  private Rol rol; // Rol del usuario
 }

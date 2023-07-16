@@ -28,13 +28,16 @@ public class AuthenticationService {
   // Registro de un nuevo usuario
   public AuthenticationResponse register(RegisterRequest request) {
     // Crea un nuevo objeto Usuario con los detalles proporcionados en la solicitud
+    if (request.getRol() == null) {
+      request.setRol(Rol.USER);
+    }
     var user = Usuario.builder()
             .firstname(request.getFirstname().trim())
             .lastname(request.getLastname().trim())
             .email(request.getEmail().trim())
             .username(request.getUsername().trim())
             .password(passwordEncoder.encode(request.getPassword().trim()))
-            .role(Rol.USER)
+            .role(request.getRol())
             .build();
     // Guarda el usuario en el repositorio
     var savedUser = repository.save(user);
