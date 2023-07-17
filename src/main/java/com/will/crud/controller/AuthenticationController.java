@@ -1,13 +1,10 @@
 package com.will.crud.controller;
 
-
-import com.will.crud.exception.ResourceNotFoundException;
 import com.will.crud.model.request.AuthenticationRequest;
 import com.will.crud.model.response.AuthenticationResponse;
 import com.will.crud.model.request.RegisterRequest;
-import com.will.crud.repository.UsuarioRepository;
 import com.will.crud.service.AuthenticationService;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,11 +15,10 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api/v1/auth")
 @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
-@RequiredArgsConstructor
-public class AuthenticationController {
+public class AuthenticationController{
 
-  private final AuthenticationService service;
-  private final UsuarioRepository repository;
+  @Autowired
+  private AuthenticationService service;
   /**
    * Maneja la solicitud de registro de un nuevo usuario.
    *

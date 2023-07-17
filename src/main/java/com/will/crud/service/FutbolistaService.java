@@ -21,7 +21,7 @@ public class FutbolistaService {
     // Obtiene un futbolista por su ID
     public Futbolista getFutbolistaById(long id) {
         return futbolistaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("futbolista does not exist with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("Futbolista does not exist with id: " + id));
     }
 
     // Crea un nuevo futbolista
