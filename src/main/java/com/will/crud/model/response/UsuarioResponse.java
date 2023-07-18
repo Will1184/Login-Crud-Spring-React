@@ -1,6 +1,4 @@
 package com.will.crud.model.response;
-
-import com.will.crud.model.entity.Usuario;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

@@ -56,8 +56,7 @@ public class UsuarioService {
         return usuarioResponsesList;
     }
     public Usuario findUsuarioId(Integer id){
-        Usuario usuario = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Futbolista does not exist with id: " + id));
-        return usuario;
+        return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Futbolista does not exist with id: " + id));
     }
     public Usuario findUsuarioId(Integer id,Usuario usuarioDetails){
         Usuario usuario = repository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Futbolista does not exist with id: " + id));
