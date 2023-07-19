@@ -26,7 +26,6 @@ public class FutbolistaService {
 
     // Crea un nuevo futbolista
     public Futbolista createFutbolista(Futbolista futbolista) {
-        futbolista.antesDePersistir();
         return futbolistaRepository.save(futbolista);
     }
 
@@ -50,7 +49,6 @@ public class FutbolistaService {
     public void deleteFutbolista(long id) {
         Futbolista futbolista = futbolistaRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Futbolista does not exist with id: " + id));
-
         futbolistaRepository.delete(futbolista);
     }
 }

@@ -22,7 +22,6 @@ public class UsuarioController {
     @Autowired
     UsuarioService usuarioService;
 
-
     @GetMapping
     @PreAuthorize("hasAuthority('admin:read')")
     public ResponseEntity<List<UsuarioResponse>>findAllUsuarios(){
