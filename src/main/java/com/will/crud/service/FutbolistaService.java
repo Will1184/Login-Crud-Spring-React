@@ -4,6 +4,8 @@ import com.will.crud.exception.ResourceNotFoundException;
 import com.will.crud.model.entity.Futbolista;
 import com.will.crud.repository.FutbolistaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,8 +16,8 @@ public class FutbolistaService {
     private FutbolistaRepository futbolistaRepository;
 
     // Obtiene todos los futbolistas
-    public List<Futbolista> getAllFutbolistas() {
-        return futbolistaRepository.findAll();
+    public Page<Futbolista> getAllFutbolistas(Pageable pageable) {
+        return futbolistaRepository.findAll(pageable);
     }
 
     // Obtiene un futbolista por su ID

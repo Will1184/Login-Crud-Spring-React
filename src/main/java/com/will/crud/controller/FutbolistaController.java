@@ -3,11 +3,13 @@ package com.will.crud.controller;
 import com.will.crud.model.entity.Futbolista;
 import com.will.crud.service.FutbolistaService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
-import java.util.List;
 
 /**
  * Controlador que maneja las solicitudes relacionadas con los futbolistas.
@@ -26,8 +28,11 @@ public class FutbolistaController {
      * @return lista de todos los futbolistas
      */
     @GetMapping
-    public List<Futbolista> getAllFutbolistas() {
-        return futbolistaService.getAllFutbolistas();
+    public Page<Futbolista> getAllFutbolistas(
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "5") int size) {
+        Pageable pageable = PageRequest.of(page,size);
+        return futbolistaService.getAllFutbolistas(pageable);
     }
 
     /**
@@ -48,7 +53,7 @@ public class FutbolistaController {
      * @param futbolista objeto de Futbolista a crear
      * @return el futbolista creado
      */
-    @PostMapping
+    @PostMapping 
     public Futbolista createFutbolista(@RequestBody Futbolista futbolista) {
         return futbolistaService.createFutbolista(futbolista);
     }
