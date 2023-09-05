@@ -2,13 +2,16 @@ package com.will.crud.controller;
 
 import com.will.crud.model.entity.Futbolista;
 import com.will.crud.service.FutbolistaService;
+import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
 
 /**
  * Controlador que maneja las solicitudes relacionadas con los futbolistas.
@@ -30,11 +33,22 @@ public class FutbolistaController extends GenericController{
      * @return lista de todos los futbolistas
      */
     @GetMapping
-    public Page<Futbolista> getAllFutbolistas(
+    public ResponseEntity<?> getAllFutbolistas(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
+        mensaje= new HashMap<>();
+        boolean estado;
         Pageable pageable = PageRequest.of(page,size);
-        return futbolistaService.getAllFutbolistas(pageable);
+        Page<Futbolista> futbolistas = futbolistaService.getAllFutbolistas(pageable);
+        if (futbolistas.isEmpty()){
+            estado=true;
+            mensaje.put("success",Boolean.TRUE);
+            mensaje.put("mensaje",String.format("Esta lista es vacia?: %b",estado));
+            return ResponseEntity.ok().body(mensaje);
+        }
+        mensaje.put("success",Boolean.TRUE);
+        mensaje.put("mensaje",futbolistas);
+        return ResponseEntity.ok().body(mensaje);
     }
 
     /**
@@ -44,9 +58,17 @@ public class FutbolistaController extends GenericController{
      * @return ResponseEntity con el futbolista encontrado o un estado HTTP 404 si no se encuentra
      */
     @GetMapping("{id}")
-    public ResponseEntity<Futbolista> getFutbolistaById(@PathVariable long id) {
+    public ResponseEntity<?> getFutbolistaById(@PathVariable long id) {
+        mensaje = new HashMap<>();
         Futbolista futbolista = futbolistaService.getFutbolistaById(id);
-        return ResponseEntity.ok(futbolista);
+        if (futbolista == null){
+            mensaje.put("success",Boolean.FALSE);
+            mensaje.put("mensaje",String.format("El futbolista con Id %d no existe",id));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensaje);
+        }
+        mensaje.put("success",Boolean.TRUE);
+        mensaje.put("mensaje",futbolista);
+        return ResponseEntity.ok().body(mensaje);
     }
 
     /**
@@ -56,8 +78,16 @@ public class FutbolistaController extends GenericController{
      * @return el futbolista creado
      */
     @PostMapping 
-    public Futbolista createFutbolista(@RequestBody Futbolista futbolista) {
-        return futbolistaService.createFutbolista(futbolista);
+    public ResponseEntity<?> createFutbolista(@Valid @RequestBody Futbolista futbolista, BindingResult result) {
+        mensaje = new HashMap<>();
+        if (result.hasErrors()){
+            mensaje.put("success",Boolean.FALSE);
+            mensaje.put("mensaje",obtenerValidaciones(result));
+            return ResponseEntity.unprocessableEntity().body(mensaje);
+        }
+        mensaje.put("success",Boolean.TRUE);
+        mensaje.put("mensaje",futbolistaService.createFutbolista(futbolista));
+        return ResponseEntity.ok().body(mensaje);
     }
 
     /**
