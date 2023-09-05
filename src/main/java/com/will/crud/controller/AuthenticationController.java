@@ -1,12 +1,14 @@
 package com.will.crud.controller;
 
 import com.will.crud.model.request.AuthenticationRequest;
-import com.will.crud.model.response.AuthenticationResponse;
 import com.will.crud.model.request.RegisterRequest;
 import com.will.crud.service.AuthenticationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Controlador que maneja las solicitudes relacionadas con la autenticación y registro de usuarios.
@@ -17,19 +19,31 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 public class AuthenticationController{
 
-  @Autowired
-  private AuthenticationService service;
+  private final AuthenticationService service;
+  private Map<String,Object> mensaje;
+
+  public AuthenticationController(AuthenticationService service) {
+    this.service = service;
+  }
+
   /**
    * Maneja la solicitud de registro de un nuevo usuario.
    *
    * @param request objeto de solicitud de registro
    * @return ResponseEntity con la respuesta de autenticación
    */
+
   @PostMapping("/register")
-  public ResponseEntity<AuthenticationResponse> register(
-          @RequestBody RegisterRequest request
-  ){
-      return ResponseEntity.ok(service.register(request));
+  public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request, BindingResult result){
+      mensaje = new HashMap<>();
+      if (result.hasErrors()){
+        mensaje.put("succes",Boolean.FALSE);
+        mensaje.put("mensaje",obtenerValidaciones(result));
+        return ResponseEntity.unprocessableEntity().body(mensaje);
+      }
+      mensaje.put("success",Boolean.TRUE);
+      mensaje.put("mensaje",service.register(request));
+      return ResponseEntity.ok(mensaje);
   }
 
   /**
@@ -39,11 +53,23 @@ public class AuthenticationController{
    * @return ResponseEntity con la respuesta de autenticación
    */
   @PostMapping("/authenticate")
-  public ResponseEntity<AuthenticationResponse> authenticate(
-          @RequestBody AuthenticationRequest request
-  ) {
-    return ResponseEntity.ok(service.authenticate(request));
+  public ResponseEntity<?> authenticate(@Valid @RequestBody AuthenticationRequest request,BindingResult result) {
+    mensaje= new HashMap<>();
+    if (result.hasErrors()){
+      mensaje.put("succes",Boolean.FALSE);
+      mensaje.put("mensaje",obtenerValidaciones(result));
+      return ResponseEntity.unprocessableEntity().body(mensaje);
+    }
+    mensaje.put("succes",Boolean.TRUE);
+    mensaje.put("mensaje",service.authenticate(request));
+    return ResponseEntity.ok(mensaje);
   }
 
+  protected Map<String,Object> obtenerValidaciones(BindingResult result){
+    Map<String,Object> validaciones = new HashMap<>();
+    result.getFieldErrors()
+            .forEach(error-> validaciones.put(error.getField(),error.getDefaultMessage()));
+    return validaciones;
+  }
 
 }
