@@ -7,6 +7,7 @@ import java.util.Map;
 
 public class GenericController {
 
+    protected Map<String,Object> mensaje;
     protected Map<String,Object> obtenerValidaciones(BindingResult result){
         Map<String,Object> validaciones = new HashMap<>();
         result.getFieldErrors()
