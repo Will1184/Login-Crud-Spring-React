@@ -2,7 +2,6 @@ package com.will.crud.controller;
 
 import com.will.crud.model.entity.Futbolista;
 import com.will.crud.service.FutbolistaService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -18,9 +17,12 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
 @RestController
 @RequestMapping("/api/v1/futbolistas")
-public class FutbolistaController {
-    @Autowired
-    private  FutbolistaService futbolistaService;
+public class FutbolistaController extends GenericController{
+    private final FutbolistaService futbolistaService;
+
+    public FutbolistaController(FutbolistaService futbolistaService) {
+        this.futbolistaService = futbolistaService;
+    }
 
     /**
      * Maneja la solicitud para obtener todas los futbolistas.
