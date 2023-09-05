@@ -3,15 +3,18 @@ package com.will.crud.service;
 import com.will.crud.exception.ResourceNotFoundException;
 import com.will.crud.model.entity.Futbolista;
 import com.will.crud.repository.FutbolistaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import java.util.Optional;
 
 @Service
 public class FutbolistaService {
-    @Autowired
-    private FutbolistaRepository futbolistaRepository;
+    private final FutbolistaRepository futbolistaRepository;
+
+    public FutbolistaService(FutbolistaRepository futbolistaRepository) {
+        this.futbolistaRepository = futbolistaRepository;
+    }
 
     // Obtiene todos los futbolistas
     public Page<Futbolista> getAllFutbolistas(Pageable pageable) {
@@ -20,8 +23,10 @@ public class FutbolistaService {
 
     // Obtiene un futbolista por su ID
     public Futbolista getFutbolistaById(long id) {
-        return futbolistaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Futbolista does not exist with id: " + id));
+        Optional<Futbolista>optionalFutbolista=futbolistaRepository.findById(id);
+        Futbolista futbolista;
+        futbolista = optionalFutbolista.orElse(null);
+        return futbolista;
     }
 
     // Crea un nuevo futbolista
