@@ -2,6 +2,7 @@ package com.will.crud.service;
 
 import com.will.crud.exception.ResourceNotFoundException;
 import com.will.crud.model.entity.Futbolista;
+import com.will.crud.model.request.FutbolistaRequest;
 import com.will.crud.repository.FutbolistaRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,7 +31,15 @@ public class FutbolistaService {
     }
 
     // Crea un nuevo futbolista
-    public Futbolista createFutbolista(Futbolista futbolista) {
+    public Futbolista createFutbolista(FutbolistaRequest request) {
+        Futbolista futbolista = Futbolista.builder()
+                .nombres(request.getNombres())
+                .apellidos(request.getApellidos())
+                .email(request.getEmail())
+                .fechaNacimiento(request.getFechaNacimiento())
+                .telefono(request.getTelefono())
+                .posicion(request.getPosicion())
+                .build();
         return futbolistaRepository.save(futbolista);
     }
 
