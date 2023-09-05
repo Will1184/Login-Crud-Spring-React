@@ -97,9 +97,24 @@ public class FutbolistaController extends GenericController{
      * @return ResponseEntity con el futbolista actualizada o un estado HTTP 404 si no se encuentra
      */
     @PutMapping("{id}")
-    public ResponseEntity<Futbolista> updateFutbolista(@PathVariable long id, @RequestBody Futbolista futbolistaDetails) {
+    public ResponseEntity<?> updateFutbolista(@PathVariable long id
+            , @Valid @RequestBody FutbolistaRequest futbolistaDetails
+            ,BindingResult result) {
+        mensaje = new HashMap<>();
         Futbolista updatedFutbolista = futbolistaService.updateFutbolista(id, futbolistaDetails);
-        return ResponseEntity.ok(updatedFutbolista);
+        if (updatedFutbolista == null){
+            mensaje.put("success",Boolean.FALSE);
+            mensaje.put("mensaje",String.format("Futbolista con id %d no existe",id));
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensaje);
+        }
+        if (result.hasErrors()){
+            mensaje.put("success",Boolean.FALSE);
+            mensaje.put("mensaje",obtenerValidaciones(result));
+            return ResponseEntity.unprocessableEntity().body(mensaje);
+        }
+        mensaje.put("success",Boolean.TRUE);
+        mensaje.put("mensaje",updatedFutbolista);
+        return ResponseEntity.ok().body(mensaje);
     }
 
     /**
