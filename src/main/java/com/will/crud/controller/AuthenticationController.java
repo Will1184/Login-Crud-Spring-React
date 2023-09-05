@@ -17,7 +17,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/v1/auth")
 @CrossOrigin(origins = "*", allowedHeaders = "*", methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PUT, RequestMethod.DELETE})
-public class AuthenticationController{
+public class AuthenticationController extends GenericController{
 
   private final AuthenticationService service;
   private Map<String,Object> mensaje;
@@ -63,13 +63,6 @@ public class AuthenticationController{
     mensaje.put("succes",Boolean.TRUE);
     mensaje.put("mensaje",service.authenticate(request));
     return ResponseEntity.ok(mensaje);
-  }
-
-  protected Map<String,Object> obtenerValidaciones(BindingResult result){
-    Map<String,Object> validaciones = new HashMap<>();
-    result.getFieldErrors()
-            .forEach(error-> validaciones.put(error.getField(),error.getDefaultMessage()));
-    return validaciones;
   }
 
 }
