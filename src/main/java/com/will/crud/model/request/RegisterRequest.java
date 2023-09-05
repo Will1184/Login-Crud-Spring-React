@@ -1,6 +1,8 @@
 package com.will.crud.model.request;
 
 import com.will.crud.model.enums.Rol;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,10 +17,17 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class RegisterRequest {
+
+  @NotEmpty
   private String firstname;  // Nombre del usuario
+  @NotEmpty
   private String lastname;   // Apellido del usuario
+  @NotEmpty
   private String username;   // Nombre de usuario
+  @NotEmpty
   private String email;      // Email del usuario
+  @NotEmpty
   private String password;   // Contraseña del usuario
+
   private Rol rol; // Rol del usuario
 }
