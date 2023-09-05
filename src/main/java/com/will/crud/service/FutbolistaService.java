@@ -44,10 +44,11 @@ public class FutbolistaService {
     }
 
     // Actualiza un futbolista existente
-    public Futbolista updateFutbolista(long id, Futbolista futbolistaDetails) {
-        Futbolista futbolista = futbolistaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Futbolista does not exist with id: " + id));
-
+    public Futbolista updateFutbolista(long id, FutbolistaRequest futbolistaDetails) {
+        Futbolista futbolista = getFutbolistaById(id);
+        if(futbolista == null){
+            return null;
+        }
         // Actualiza los campos del futbolista con los valores proporcionados en futbolistaDetails
         futbolista.antesDeUpdate();
         futbolista.setNombres(futbolistaDetails.getNombres());
