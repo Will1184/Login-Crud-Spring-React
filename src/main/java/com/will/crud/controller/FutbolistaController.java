@@ -1,6 +1,7 @@
 package com.will.crud.controller;
 
 import com.will.crud.model.entity.Futbolista;
+import com.will.crud.model.request.FutbolistaRequest;
 import com.will.crud.service.FutbolistaService;
 import jakarta.validation.Valid;
 import org.springframework.data.domain.Page;
@@ -37,13 +38,11 @@ public class FutbolistaController extends GenericController{
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "5") int size) {
         mensaje= new HashMap<>();
-        boolean estado;
         Pageable pageable = PageRequest.of(page,size);
         Page<Futbolista> futbolistas = futbolistaService.getAllFutbolistas(pageable);
         if (futbolistas.isEmpty()){
-            estado=true;
             mensaje.put("success",Boolean.TRUE);
-            mensaje.put("mensaje",String.format("Esta lista es vacia?: %b",estado));
+            mensaje.put("mensaje",String.format("Esta lista es vacia?: %b", true));
             return ResponseEntity.ok().body(mensaje);
         }
         mensaje.put("success",Boolean.TRUE);
@@ -78,7 +77,7 @@ public class FutbolistaController extends GenericController{
      * @return el futbolista creado
      */
     @PostMapping 
-    public ResponseEntity<?> createFutbolista(@Valid @RequestBody Futbolista futbolista, BindingResult result) {
+    public ResponseEntity<?> createFutbolista(@Valid @RequestBody FutbolistaRequest futbolista, BindingResult result) {
         mensaje = new HashMap<>();
         if (result.hasErrors()){
             mensaje.put("success",Boolean.FALSE);
