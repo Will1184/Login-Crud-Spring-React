@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
-import java.util.Map;
 
 /**
  * Controlador que maneja las solicitudes relacionadas con la autenticación y registro de usuarios.
@@ -20,7 +19,6 @@ import java.util.Map;
 public class AuthenticationController extends GenericController{
 
   private final AuthenticationService service;
-  private Map<String,Object> mensaje;
 
   public AuthenticationController(AuthenticationService service) {
     this.service = service;
@@ -37,7 +35,7 @@ public class AuthenticationController extends GenericController{
   public ResponseEntity<?> register(@Valid @RequestBody RegisterRequest request, BindingResult result){
       mensaje = new HashMap<>();
       if (result.hasErrors()){
-        mensaje.put("succes",Boolean.FALSE);
+        mensaje.put("success",Boolean.FALSE);
         mensaje.put("mensaje",obtenerValidaciones(result));
         return ResponseEntity.unprocessableEntity().body(mensaje);
       }
@@ -56,11 +54,11 @@ public class AuthenticationController extends GenericController{
   public ResponseEntity<?> authenticate(@Valid @RequestBody AuthenticationRequest request,BindingResult result) {
     mensaje= new HashMap<>();
     if (result.hasErrors()){
-      mensaje.put("succes",Boolean.FALSE);
+      mensaje.put("success",Boolean.FALSE);
       mensaje.put("mensaje",obtenerValidaciones(result));
       return ResponseEntity.unprocessableEntity().body(mensaje);
     }
-    mensaje.put("succes",Boolean.TRUE);
+    mensaje.put("success",Boolean.TRUE);
     mensaje.put("mensaje",service.authenticate(request));
     return ResponseEntity.ok(mensaje);
   }
