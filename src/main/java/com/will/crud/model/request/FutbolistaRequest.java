@@ -1,6 +1,5 @@
 package com.will.crud.model.request;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.NotEmpty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
