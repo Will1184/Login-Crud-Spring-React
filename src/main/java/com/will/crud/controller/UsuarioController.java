@@ -7,7 +7,6 @@ import com.will.crud.model.request.ChangeRolRequest;
 import com.will.crud.model.request.ChangeUsernameRequest;
 import com.will.crud.model.response.*;
 import com.will.crud.service.UsuarioService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +18,11 @@ import java.util.List;
 @RequestMapping("/api/v2/usuarios")
 public class UsuarioController {
 
-    @Autowired
-    UsuarioService usuarioService;
+    private final UsuarioService usuarioService;
+
+    public UsuarioController(UsuarioService usuarioService) {
+        this.usuarioService = usuarioService;
+    }
 
     @GetMapping
     @PreAuthorize("hasAuthority('admin:read')")
