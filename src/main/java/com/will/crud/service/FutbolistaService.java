@@ -61,9 +61,12 @@ public class FutbolistaService {
     }
 
     // Elimina una futbolista por su ID
-    public void deleteFutbolista(long id) {
-        Futbolista futbolista = futbolistaRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Futbolista does not exist with id: " + id));
-        futbolistaRepository.delete(futbolista);
+    public boolean deleteFutbolista(long id) {
+        Futbolista futbolista = getFutbolistaById(id);
+        if (futbolista != null){
+            futbolistaRepository.delete(futbolista);
+            return true ;
+        }
+        return false;
     }
 }
