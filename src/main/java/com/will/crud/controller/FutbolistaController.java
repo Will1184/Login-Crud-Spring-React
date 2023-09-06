@@ -126,8 +126,16 @@ public class FutbolistaController extends GenericController{
      */
     @DeleteMapping("{id}")
     @PreAuthorize("hasAuthority('admin:delete')")
-    public ResponseEntity<HttpStatus> deleteFutbolista(@PathVariable long id) {
-        futbolistaService.deleteFutbolista(id);
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    public ResponseEntity<?> deleteFutbolista(@PathVariable long id) {
+        mensaje = new HashMap<>();
+        boolean delete = futbolistaService.deleteFutbolista(id);
+        if (delete){
+            mensaje.put("success",Boolean.TRUE);
+            mensaje.put("mensaje",String.format("Futbolista con id %d ha sido eliminado",id));
+            return ResponseEntity.ok().body(mensaje);
+        }
+        mensaje.put("success",Boolean.FALSE);
+        mensaje.put("mensaje",String.format("Futbolista con id %d no ha sido eliminado o no existe",id));
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(mensaje);
     }
 }
