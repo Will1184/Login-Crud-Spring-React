@@ -1,6 +1,5 @@
 package com.will.crud.service;
 
-import com.will.crud.exception.ResourceNotFoundException;
 import com.will.crud.model.entity.Futbolista;
 import com.will.crud.model.request.FutbolistaRequest;
 import com.will.crud.repository.FutbolistaRepository;
