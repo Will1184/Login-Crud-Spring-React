@@ -1,5 +1,6 @@
 package com.will.crud.security;
 
+import com.will.crud.controller.CustomAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,6 +23,7 @@ public class SecurityConfiguration {
   private final JwtAuthenticationFilter jwtAuthFilter;
   private final AuthenticationProvider authenticationProvider;
   private final LogoutHandler logoutHandler;
+   private final CustomAuthenticationEntryPoint authenticationEntryPoint;
 
   // Configura la cadena de filtros de seguridad
   @Bean
@@ -30,9 +32,7 @@ public class SecurityConfiguration {
             .csrf()
             .disable()
             .authorizeHttpRequests()
-
-            // Permitir el acceso público a estas rutas específicas sin autenticación
-            .requestMatchers(
+            .requestMatchers( // Permitir el acceso público a estas rutas específicas sin autenticación
                     "/api/v1/auth/**",
                     "/v2/api-docs",
                     "/v3/api-docs",
@@ -46,27 +46,23 @@ public class SecurityConfiguration {
                     "/swagger-ui.html"
             )
             .permitAll()
-
-            // Restringir el acceso a otras rutas, requerir autenticación
-            .anyRequest()
+            .anyRequest() // Restringir el acceso a otras rutas, requerir autenticación
             .authenticated()
-
             .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-
             .and()
             .authenticationProvider(authenticationProvider)
-
-            // Agregar el filtro de autenticación JWT antes del filtro de autenticación de usuario y contraseña
-            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-
-            // Configurar la funcionalidad de cierre de sesión
-            .logout()
+            .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)// Agregar el filtro de autenticación JWT antes del filtro de autenticación de usuario y contraseña
+            .logout()// Configurar la funcionalidad de cierre de sesión
             .logoutUrl("/api/v1/auth/logout")
             .addLogoutHandler(logoutHandler)
-            .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext());
-
+            .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+            .and() //Controla las excepciones
+            .exceptionHandling()
+            .authenticationEntryPoint(authenticationEntryPoint)
+    ;
     return http.build();
   }
+
 }
