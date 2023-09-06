@@ -41,7 +41,7 @@ public class UsuarioCommand implements CommandLineRunner {
                 .email("example2@example.com")
                 .username("ML")
                 .password("12345")
-                .rol(Rol.ADMIN)
+                .rol(Rol.USER)
                 .build());
     }
 }
